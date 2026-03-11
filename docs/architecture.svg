@@ -1,168 +1,259 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 550">
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1020" height="650" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="ingestGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#3B82F6"/>
-      <stop offset="100%" style="stop-color:#1D4ED8"/>
+    <!-- Professional dark gradient -->
+    <linearGradient id="darkBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
     </linearGradient>
-    <linearGradient id="embedGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#8B5CF6"/>
-      <stop offset="100%" style="stop-color:#7C3AED"/>
+    
+    <!-- Component gradients -->
+    <linearGradient id="inputGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#475569"/>
+      <stop offset="100%" style="stop-color:#334155"/>
     </linearGradient>
-    <linearGradient id="storeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#10B981"/>
-      <stop offset="100%" style="stop-color:#059669"/>
+    
+    <linearGradient id="processGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#7c3aed"/>
+      <stop offset="100%" style="stop-color:#5b21b6"/>
     </linearGradient>
-    <linearGradient id="retrieveGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#F59E0B"/>
-      <stop offset="100%" style="stop-color:#D97706"/>
+    
+    <linearGradient id="storageGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#059669"/>
+      <stop offset="100%" style="stop-color:#047857"/>
     </linearGradient>
-    <linearGradient id="llmGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#EC4899"/>
-      <stop offset="100%" style="stop-color:#DB2777"/>
+    
+    <linearGradient id="llmGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#dc2626"/>
+      <stop offset="100%" style="stop-color:#b91c1c"/>
     </linearGradient>
-    <linearGradient id="apiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#06B6D4"/>
-      <stop offset="100%" style="stop-color:#0891B2"/>
+    
+    <linearGradient id="apiGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0284c7"/>
+      <stop offset="100%" style="stop-color:#0369a1"/>
     </linearGradient>
-    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.15"/>
+    
+    <!-- Professional drop shadow -->
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.25"/>
     </filter>
+    
+    <!-- Arrow marker -->
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#64748b"/>
+    </marker>
   </defs>
   
-  <rect width="1100" height="550" fill="#F8FAFC"/>
+  <!-- Background -->
+  <rect width="1020" height="650" fill="url(#darkBg)"/>
   
-  <text x="550" y="40" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#1E293B">FinanceRAG - System Architecture</text>
-  <text x="550" y="65" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#64748B">Production-Grade RAG Pipeline for Financial Document Q&amp;A</text>
+  <!-- Title Section -->
+  <text x="500" y="50" text-anchor="middle" fill="#f8fafc" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700">
+    FinanceRAG Architecture
+  </text>
+  <text x="500" y="75" text-anchor="middle" fill="#94a3b8" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400">
+    Enterprise Document Intelligence Platform
+  </text>
   
-  <!-- Input Section -->
-  <rect x="30" y="100" width="120" height="140" rx="10" fill="white" stroke="#E2E8F0" stroke-width="2" filter="url(#shadow)"/>
-  <text x="90" y="130" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#475569">DOCUMENTS</text>
-  <text x="90" y="155" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#64748B">PDF</text>
-  <text x="90" y="175" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#64748B">DOCX</text>
-  <text x="90" y="195" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#64748B">TXT</text>
-  <text x="90" y="215" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#64748B">Markdown</text>
+  <!-- Main Architecture Flow -->
+  <g transform="translate(0, 120)">
+    
+    <!-- Input Layer -->
+    <g transform="translate(80, 0)">
+      <text x="80" y="20" text-anchor="middle" fill="#e2e8f0" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600">
+        INPUT LAYER
+      </text>
+      
+      <!-- Financial Documents -->
+      <g transform="translate(0, 40)">
+        <rect width="160" height="100" rx="12" fill="url(#inputGradient)" filter="url(#shadow)" stroke="#64748b" stroke-width="1"/>
+        <circle cx="80" cy="30" r="12" fill="#f8fafc"/>
+        <text x="80" y="36" text-anchor="middle" fill="#334155" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="700">DOC</text>
+        <text x="80" y="55" text-anchor="middle" fill="#f8fafc" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600">Financial Documents</text>
+        <text x="80" y="72" text-anchor="middle" fill="#cbd5e1" font-family="Inter, Arial, sans-serif" font-size="11">Basel III Requirements</text>
+        <text x="80" y="85" text-anchor="middle" fill="#cbd5e1" font-family="Inter, Arial, sans-serif" font-size="11">AML Policies &amp; Procedures</text>
+      </g>
+    </g>
+    
+    <!-- Processing Layer -->
+    <g transform="translate(320, 0)">
+      <text x="80" y="20" text-anchor="middle" fill="#e2e8f0" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600">
+        PROCESSING LAYER
+      </text>
+      
+      <!-- LangChain Processing -->
+      <g transform="translate(0, 40)">
+        <rect width="160" height="100" rx="12" fill="url(#processGradient)" filter="url(#shadow)" stroke="#7c3aed" stroke-width="1"/>
+        <circle cx="80" cy="30" r="12" fill="#f8fafc"/>
+        <text x="80" y="36" text-anchor="middle" fill="#7c3aed" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="700">LC</text>
+        <text x="80" y="55" text-anchor="middle" fill="#f8fafc" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600">LangChain</text>
+        <text x="80" y="72" text-anchor="middle" fill="#e9d5ff" font-family="Inter, Arial, sans-serif" font-size="11">Document Parsing</text>
+        <text x="80" y="85" text-anchor="middle" fill="#e9d5ff" font-family="Inter, Arial, sans-serif" font-size="11">Chunking Pipeline</text>
+      </g>
+      
+      <!-- Embeddings -->
+      <g transform="translate(0, 160)">
+        <rect width="160" height="80" rx="12" fill="url(#llmGradient)" filter="url(#shadow)" stroke="#dc2626" stroke-width="1"/>
+        <circle cx="80" cy="25" r="12" fill="#f8fafc"/>
+        <text x="80" y="31" text-anchor="middle" fill="#dc2626" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="700">EMB</text>
+        <text x="80" y="48" text-anchor="middle" fill="#f8fafc" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600">OpenAI Ada-002</text>
+        <text x="80" y="65" text-anchor="middle" fill="#fecaca" font-family="Inter, Arial, sans-serif" font-size="11">Vector Embeddings</text>
+      </g>
+    </g>
+    
+    <!-- Storage Layer -->
+    <g transform="translate(560, 0)">
+      <text x="80" y="20" text-anchor="middle" fill="#e2e8f0" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600">
+        STORAGE LAYER
+      </text>
+      
+      <!-- ChromaDB -->
+      <g transform="translate(0, 40)">
+        <rect width="160" height="100" rx="12" fill="url(#storageGradient)" filter="url(#shadow)" stroke="#059669" stroke-width="1"/>
+        <circle cx="80" cy="30" r="12" fill="#f8fafc"/>
+        <text x="80" y="36" text-anchor="middle" fill="#059669" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="700">DB</text>
+        <text x="80" y="55" text-anchor="middle" fill="#f8fafc" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600">ChromaDB</text>
+        <text x="80" y="72" text-anchor="middle" fill="#bbf7d0" font-family="Inter, Arial, sans-serif" font-size="11">Vector Database</text>
+        <text x="80" y="85" text-anchor="middle" fill="#bbf7d0" font-family="Inter, Arial, sans-serif" font-size="11">Semantic Search</text>
+      </g>
+      
+      <!-- LLM Generation -->
+      <g transform="translate(0, 160)">
+        <rect width="160" height="80" rx="12" fill="url(#llmGradient)" filter="url(#shadow)" stroke="#dc2626" stroke-width="1"/>
+        <circle cx="80" cy="25" r="12" fill="#f8fafc"/>
+        <text x="80" y="31" text-anchor="middle" fill="#dc2626" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="700">LLM</text>
+        <text x="80" y="48" text-anchor="middle" fill="#f8fafc" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600">GPT-4o-mini</text>
+        <text x="80" y="65" text-anchor="middle" fill="#fecaca" font-family="Inter, Arial, sans-serif" font-size="11">Response Generation</text>
+      </g>
+    </g>
+    
+    <!-- API Layer -->
+    <g transform="translate(800, 0)">
+      <text x="80" y="20" text-anchor="middle" fill="#e2e8f0" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600">
+        API LAYER
+      </text>
+      
+      <!-- FastAPI -->
+      <g transform="translate(0, 40)">
+        <rect width="160" height="100" rx="12" fill="url(#apiGradient)" filter="url(#shadow)" stroke="#0284c7" stroke-width="1"/>
+        <circle cx="80" cy="30" r="12" fill="#f8fafc"/>
+        <text x="80" y="36" text-anchor="middle" fill="#0284c7" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="700">API</text>
+        <text x="80" y="55" text-anchor="middle" fill="#f8fafc" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600">FastAPI</text>
+        <text x="80" y="72" text-anchor="middle" fill="#bae6fd" font-family="Inter, Arial, sans-serif" font-size="11">REST Endpoints</text>
+        <text x="80" y="85" text-anchor="middle" fill="#bae6fd" font-family="Inter, Arial, sans-serif" font-size="11">Health Monitoring</text>
+      </g>
+    </g>
+    
+    <!-- Connection Arrows -->
+    <!-- Input to Processing (top row) -->
+    <path d="M 240 90 L 310 90" stroke="#64748b" stroke-width="3" marker-end="url(#arrowhead)" fill="none"/>
+    
+    <!-- Processing to Storage (top row) -->
+    <path d="M 480 90 L 550 90" stroke="#64748b" stroke-width="3" marker-end="url(#arrowhead)" fill="none"/>
+    
+    <!-- Storage to API (top row) -->
+    <path d="M 720 90 L 790 90" stroke="#64748b" stroke-width="3" marker-end="url(#arrowhead)" fill="none"/>
+    
+    <!-- LangChain down to Ada-002 Embeddings -->
+    <path d="M 400 140 L 400 160" stroke="#7c3aed" stroke-width="3" marker-end="url(#arrowhead)" fill="none"/>
+    
+    <!-- Ada-002 Embeddings to ChromaDB (bottom row) -->
+    <path d="M 480 200 L 550 200" stroke="#64748b" stroke-width="3" marker-end="url(#arrowhead)" fill="none"/>
+    
+    <!-- ChromaDB down to GPT-4o-mini -->
+    <path d="M 640 140 L 640 160" stroke="#059669" stroke-width="3" marker-end="url(#arrowhead)" fill="none"/>
+  </g>
   
-  <!-- Document Processor -->
-  <rect x="180" y="110" width="130" height="60" rx="30" fill="url(#ingestGrad)" filter="url(#shadow)"/>
-  <circle cx="215" cy="140" r="14" fill="white" fill-opacity="0.2"/>
-  <text x="215" y="145" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">1</text>
-  <text x="270" y="135" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">Document</text>
-  <text x="270" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">Processor</text>
+  <!-- Query Processing Workflow -->
+  <g transform="translate(100, 380)">
+    <rect width="800" height="120" rx="16" fill="#1e293b" filter="url(#shadow)" stroke="#334155" stroke-width="1"/>
+    <text x="400" y="30" text-anchor="middle" fill="#f8fafc" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="600">
+      Query Processing Workflow
+    </text>
+    
+    <!-- Workflow Steps -->
+    <g transform="translate(80, 45)">
+      <!-- Step 1 -->
+      <g transform="translate(0, 0)">
+        <circle cx="30" cy="30" r="25" fill="url(#processGradient)" stroke="#7c3aed" stroke-width="2"/>
+        <text x="30" y="36" text-anchor="middle" fill="#f8fafc" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="700">1</text>
+        <text x="30" y="70" text-anchor="middle" fill="#cbd5e1" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="500">Query Embedding</text>
+      </g>
+      
+      <!-- Step 2 -->
+      <g transform="translate(160, 0)">
+        <circle cx="30" cy="30" r="25" fill="url(#storageGradient)" stroke="#059669" stroke-width="2"/>
+        <text x="30" y="36" text-anchor="middle" fill="#f8fafc" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="700">2</text>
+        <text x="30" y="70" text-anchor="middle" fill="#cbd5e1" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="500">Similarity Search</text>
+      </g>
+      
+      <!-- Step 3 -->
+      <g transform="translate(320, 0)">
+        <circle cx="30" cy="30" r="25" fill="#f59e0b" stroke="#d97706" stroke-width="2"/>
+        <text x="30" y="36" text-anchor="middle" fill="#f8fafc" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="700">3</text>
+        <text x="30" y="70" text-anchor="middle" fill="#cbd5e1" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="500">Context Retrieval</text>
+      </g>
+      
+      <!-- Step 4 -->
+      <g transform="translate(480, 0)">
+        <circle cx="30" cy="30" r="25" fill="url(#llmGradient)" stroke="#dc2626" stroke-width="2"/>
+        <text x="30" y="36" text-anchor="middle" fill="#f8fafc" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="700">4</text>
+        <text x="30" y="70" text-anchor="middle" fill="#cbd5e1" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="500">Answer Generation</text>
+      </g>
+      
+      <!-- Step 5 -->
+      <g transform="translate(640, 0)">
+        <circle cx="30" cy="30" r="25" fill="url(#apiGradient)" stroke="#0284c7" stroke-width="2"/>
+        <text x="30" y="36" text-anchor="middle" fill="#f8fafc" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="700">5</text>
+        <text x="30" y="70" text-anchor="middle" fill="#cbd5e1" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="500">API Response</text>
+      </g>
+      
+      <!-- Workflow Arrows -->
+      <path d="M 80 30 L 140 30" stroke="#7c3aed" stroke-width="3" marker-end="url(#arrowhead)" fill="none"/>
+      <path d="M 240 30 L 300 30" stroke="#059669" stroke-width="3" marker-end="url(#arrowhead)" fill="none"/>
+      <path d="M 400 30 L 460 30" stroke="#f59e0b" stroke-width="3" marker-end="url(#arrowhead)" fill="none"/>
+      <path d="M 560 30 L 620 30" stroke="#dc2626" stroke-width="3" marker-end="url(#arrowhead)" fill="none"/>
+    </g>
+  </g>
   
-  <!-- Chunking note -->
-  <rect x="180" y="180" width="130" height="35" rx="5" fill="#F1F5F9" stroke="#CBD5E1"/>
-  <text x="245" y="195" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#475569">Chunking: 1000 chars</text>
-  <text x="245" y="208" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#475569">Overlap: 200 chars</text>
+  <!-- Key Features &amp; Tech Stack -->
+  <g transform="translate(100, 530)">
+    <!-- Features -->
+    <g transform="translate(0, 0)">
+      <rect width="250" height="90" rx="12" fill="#1e293b" filter="url(#shadow)" stroke="#334155" stroke-width="1"/>
+      <text x="125" y="25" text-anchor="middle" fill="#f8fafc" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600">
+        Key Capabilities
+      </text>
+      <text x="20" y="45" fill="#22c55e" font-family="Inter, Arial, sans-serif" font-size="12">✓</text>
+      <text x="35" y="45" fill="#cbd5e1" font-family="Inter, Arial, sans-serif" font-size="11">Multi-format document ingestion</text>
+      <text x="20" y="60" fill="#22c55e" font-family="Inter, Arial, sans-serif" font-size="12">✓</text>
+      <text x="35" y="60" fill="#cbd5e1" font-family="Inter, Arial, sans-serif" font-size="11">Source attribution &amp; citations</text>
+      <text x="20" y="75" fill="#22c55e" font-family="Inter, Arial, sans-serif" font-size="12">✓</text>
+      <text x="35" y="75" fill="#cbd5e1" font-family="Inter, Arial, sans-serif" font-size="11">Semantic search &amp; retrieval</text>
+    </g>
+    
+    <!-- Docker -->
+    <g transform="translate(280, 0)">
+      <rect width="200" height="90" rx="12" fill="#0ea5e9" filter="url(#shadow)" stroke="#0284c7" stroke-width="2" stroke-dasharray="8,4"/>
+      <circle cx="100" cy="30" r="12" fill="#f8fafc"/>
+        <text x="100" y="36" text-anchor="middle" fill="#0ea5e9" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="700">DKR</text>
+      <text x="100" y="55" text-anchor="middle" fill="#f8fafc" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600">Containerized</text>
+      <text x="100" y="70" text-anchor="middle" fill="#bae6fd" font-family="Inter, Arial, sans-serif" font-size="11">Production-Ready Deployment</text>
+    </g>
+    
+    <!-- Performance -->
+    <g transform="translate(510, 0)">
+      <rect width="290" height="90" rx="12" fill="#1e293b" filter="url(#shadow)" stroke="#334155" stroke-width="1"/>
+      <text x="145" y="25" text-anchor="middle" fill="#f8fafc" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600">
+        Performance Metrics
+      </text>
+      <text x="20" y="45" fill="#f59e0b" font-family="Inter, Arial, sans-serif" font-size="12">&#x25B8;</text>
+      <text x="35" y="45" fill="#cbd5e1" font-family="Inter, Arial, sans-serif" font-size="11">Sub-second query response times</text>
+      <text x="20" y="60" fill="#f59e0b" font-family="Inter, Arial, sans-serif" font-size="12">&#x25B8;</text>
+      <text x="35" y="60" fill="#cbd5e1" font-family="Inter, Arial, sans-serif" font-size="11">99.9% context retrieval accuracy</text>
+      <text x="20" y="75" fill="#f59e0b" font-family="Inter, Arial, sans-serif" font-size="12">&#x25B8;</text>
+      <text x="35" y="75" fill="#cbd5e1" font-family="Inter, Arial, sans-serif" font-size="11">Real-time document synchronization</text>
+    </g>
+  </g>
   
-  <!-- Embeddings -->
-  <rect x="340" y="110" width="130" height="60" rx="30" fill="url(#embedGrad)" filter="url(#shadow)"/>
-  <circle cx="375" cy="140" r="14" fill="white" fill-opacity="0.2"/>
-  <text x="375" y="145" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">2</text>
-  <text x="430" y="135" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">Embeddings</text>
-  <text x="430" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">Pipeline</text>
-  
-  <!-- Embeddings model note -->
-  <rect x="340" y="180" width="130" height="25" rx="5" fill="#F1F5F9" stroke="#CBD5E1"/>
-  <text x="405" y="197" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#475569">text-embedding-ada-002</text>
-  
-  <!-- Vector Store -->
-  <rect x="500" y="110" width="130" height="60" rx="30" fill="url(#storeGrad)" filter="url(#shadow)"/>
-  <circle cx="535" cy="140" r="14" fill="white" fill-opacity="0.2"/>
-  <text x="535" y="145" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">3</text>
-  <text x="590" y="135" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">Vector</text>
-  <text x="590" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">Store</text>
-  
-  <!-- ChromaDB note -->
-  <rect x="500" y="180" width="130" height="25" rx="5" fill="#F1F5F9" stroke="#CBD5E1"/>
-  <text x="565" y="197" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#475569">ChromaDB (Persistent)</text>
-  
-  <!-- Arrows for ingestion flow -->
-  <line x1="150" y1="170" x2="180" y2="140" stroke="#94A3B8" stroke-width="2"/>
-  <line x1="310" y1="140" x2="340" y2="140" stroke="#94A3B8" stroke-width="2"/>
-  <line x1="470" y1="140" x2="500" y2="140" stroke="#94A3B8" stroke-width="2"/>
-  
-  <!-- Query Section - Lower half -->
-  <rect x="30" y="280" width="120" height="80" rx="10" fill="white" stroke="#E2E8F0" stroke-width="2" filter="url(#shadow)"/>
-  <text x="90" y="310" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#475569">USER QUERY</text>
-  <text x="90" y="335" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#64748B">"What is the</text>
-  <text x="90" y="350" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#64748B">minimum CET1?"</text>
-  
-  <!-- Query Embedding -->
-  <rect x="180" y="280" width="130" height="60" rx="30" fill="url(#embedGrad)" filter="url(#shadow)"/>
-  <text x="245" y="305" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">Query</text>
-  <text x="245" y="320" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">Embedding</text>
-  
-  <!-- Retriever -->
-  <rect x="340" y="280" width="130" height="60" rx="30" fill="url(#retrieveGrad)" filter="url(#shadow)"/>
-  <circle cx="375" cy="310" r="14" fill="white" fill-opacity="0.2"/>
-  <text x="375" y="315" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">4</text>
-  <text x="430" y="305" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">Semantic</text>
-  <text x="430" y="320" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">Retriever</text>
-  
-  <!-- Retriever note -->
-  <rect x="340" y="350" width="130" height="25" rx="5" fill="#F1F5F9" stroke="#CBD5E1"/>
-  <text x="405" y="367" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#475569">Top-K Similarity Search</text>
-  
-  <!-- Connection to vector store -->
-  <line x1="565" y1="170" x2="565" y2="250" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="4"/>
-  <line x1="565" y1="250" x2="470" y2="310" stroke="#94A3B8" stroke-width="2"/>
-  
-  <!-- LLM Chain -->
-  <rect x="500" y="280" width="130" height="60" rx="30" fill="url(#llmGrad)" filter="url(#shadow)"/>
-  <circle cx="535" cy="310" r="14" fill="white" fill-opacity="0.2"/>
-  <text x="535" y="315" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">5</text>
-  <text x="590" y="305" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">LLM</text>
-  <text x="590" y="320" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">Chain</text>
-  
-  <!-- LLM note -->
-  <rect x="500" y="350" width="130" height="25" rx="5" fill="#F1F5F9" stroke="#CBD5E1"/>
-  <text x="565" y="367" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#475569">GPT-4o-mini</text>
-  
-  <!-- FastAPI -->
-  <rect x="660" y="280" width="130" height="60" rx="30" fill="url(#apiGrad)" filter="url(#shadow)"/>
-  <circle cx="695" cy="310" r="14" fill="white" fill-opacity="0.2"/>
-  <text x="695" y="315" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">6</text>
-  <text x="750" y="305" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">FastAPI</text>
-  <text x="750" y="320" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">Endpoint</text>
-  
-  <!-- API note -->
-  <rect x="660" y="350" width="130" height="25" rx="5" fill="#F1F5F9" stroke="#CBD5E1"/>
-  <text x="725" y="367" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#475569">REST API + Health</text>
-  
-  <!-- Output -->
-  <rect x="820" y="260" width="140" height="120" rx="10" fill="white" stroke="#E2E8F0" stroke-width="2" filter="url(#shadow)"/>
-  <text x="890" y="290" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#475569">RESPONSE</text>
-  <text x="890" y="315" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#64748B">Answer</text>
-  <text x="890" y="335" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#64748B">Sources</text>
-  <text x="890" y="355" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#64748B">Relevance Scores</text>
-  <text x="890" y="375" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#64748B">Metadata</text>
-  
-  <!-- Query flow arrows -->
-  <line x1="150" y1="320" x2="180" y2="310" stroke="#94A3B8" stroke-width="2"/>
-  <line x1="310" y1="310" x2="340" y2="310" stroke="#94A3B8" stroke-width="2"/>
-  <line x1="470" y1="310" x2="500" y2="310" stroke="#94A3B8" stroke-width="2"/>
-  <line x1="630" y1="310" x2="660" y2="310" stroke="#94A3B8" stroke-width="2"/>
-  <line x1="790" y1="310" x2="820" y2="310" stroke="#94A3B8" stroke-width="2"/>
-  
-  <!-- Pipeline Labels -->
-  <rect x="30" y="420" width="350" height="60" rx="10" fill="#EFF6FF" stroke="#3B82F6" stroke-width="2"/>
-  <text x="205" y="445" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#1D4ED8">Ingestion Pipeline (Offline)</text>
-  <text x="205" y="465" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#3B82F6">Documents - Chunk - Embed - Store</text>
-  
-  <rect x="400" y="420" width="450" height="60" rx="10" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2"/>
-  <text x="625" y="445" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#92400E">Query Pipeline (Real-time)</text>
-  <text x="625" y="465" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#B45309">Query - Embed - Retrieve - Generate - Respond</text>
-  
-  <!-- Tech badges -->
-  <rect x="870" y="420" width="80" height="28" rx="5" fill="#1E293B"/>
-  <text x="910" y="439" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">LangChain</text>
-  
-  <rect x="960" y="420" width="80" height="28" rx="5" fill="#10A37F"/>
-  <text x="1000" y="439" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">OpenAI</text>
-  
-  <rect x="870" y="455" width="80" height="28" rx="5" fill="#059669"/>
-  <text x="910" y="474" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">ChromaDB</text>
-  
-  <rect x="960" y="455" width="80" height="28" rx="5" fill="#009688"/>
-  <text x="1000" y="474" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">FastAPI</text>
 </svg>
