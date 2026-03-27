@@ -12,6 +12,7 @@ from src.config.settings import get_settings
 from src.tools.document_processor import DocumentProcessor
 from src.tools.vector_store import get_vector_store_manager
 from src.tools.rag_chain import get_rag_chain
+from src.database import init_db, log_query, log_document
 
 logger = structlog.get_logger()
 
@@ -92,6 +93,17 @@ class HealthResponse(BaseModel):
     settings: Dict[str, Any]
 
 
+# Initialize database on startup
+@app.on_event("startup")
+async def startup_event():
+    """Initialize database tables on startup."""
+    try:
+        init_db()
+        logger.info("database_initialized")
+    except Exception as e:
+        logger.warning("database_init_skipped", error=str(e))
+
+
 # Endpoints
 @app.get("/", response_model=Dict[str, str])
 async def root():
@@ -140,8 +152,23 @@ async def query_documents(request: QueryRequest):
     along with source references.
     """
     try:
+        import time
+        start_time = time.time()
+        
         rag_chain = get_rag_chain()
         result = rag_chain.query(request.question, k=request.k)
+        
+        response_time_ms = (time.time() - start_time) * 1000
+        
+        # Log query to PostgreSQL
+        log_query(
+            question=request.question,
+            answer=result.get("answer"),
+            model=result.get("model"),
+            documents_retrieved=result.get("documents_retrieved", 0),
+            sources=result.get("sources"),
+            response_time_ms=response_time_ms
+        )
         
         return QueryResponse(
             answer=result["answer"],
