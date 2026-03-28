@@ -11,7 +11,6 @@ from langchain_community.document_loaders import (
     TextLoader,
     PyPDFLoader,
     Docx2txtLoader,
-    UnstructuredMarkdownLoader,
 )
 
 from src.config.settings import get_settings
@@ -36,7 +35,7 @@ class DocumentProcessor:
             ".txt": TextLoader,
             ".pdf": PyPDFLoader,
             ".docx": Docx2txtLoader,
-            ".md": UnstructuredMarkdownLoader,
+            ".md": TextLoader,
         }
     
     def load_document(self, file_path: str) -> List[Document]:
