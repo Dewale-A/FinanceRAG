@@ -3,6 +3,8 @@
 ![CI](https://github.com/Dewale-A/FinanceRAG/actions/workflows/ci.yml/badge.svg)
 ![Deploy](https://github.com/Dewale-A/FinanceRAG/actions/workflows/deploy.yml/badge.svg)
 
+**Live:** [http://35.171.2.221/docs](http://35.171.2.221/docs)
+
 A **production-grade RAG (Retrieval-Augmented Generation) system** for financial document Q&A. Built with LangChain, ChromaDB, and FastAPI, this system enables intelligent querying of financial regulations, compliance policies, and risk management documents.
 
 ## 🏗️ System Architecture
