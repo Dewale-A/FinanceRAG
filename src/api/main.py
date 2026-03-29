@@ -1,8 +1,22 @@
 """FastAPI application for FinanceRAG."""
 
+import os
 from typing import List, Optional, Dict, Any
 from pathlib import Path
 import structlog
+
+import sentry_sdk
+from sentry_sdk.integrations.fastapi import FastApiIntegration
+
+# Initialize Sentry before app creation
+sentry_dsn = os.getenv("SENTRY_DSN", "")
+if sentry_dsn:
+    sentry_sdk.init(
+        dsn=sentry_dsn,
+        integrations=[FastApiIntegration()],
+        traces_sample_rate=0.1,
+        environment=os.getenv("ENVIRONMENT", "production"),
+    )
 
 from fastapi import FastAPI, HTTPException, UploadFile, File, Query, Depends
 from fastapi.middleware.cors import CORSMiddleware
@@ -307,6 +321,12 @@ async def clear_collection():
     except Exception as e:
         logger.error("clear_error", error=str(e))
         raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/test-sentry")
+async def test_sentry():
+    """Trigger a test error for Sentry. Remove after verifying."""
+    raise ValueError("Sentry test error - delete this endpoint after testing!")
 
 
 # Run with: uvicorn src.api.main:app --reload

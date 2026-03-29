@@ -30,3 +30,4 @@ pydantic-settings>=2.1.0
 
 # Observability
 structlog>=24.1.0
+sentry-sdk[fastapi]>=1.40.0

@@ -32,6 +32,10 @@ class Settings(BaseSettings):
     # Auth
     api_key: str = Field(default="", env="API_KEY")
     
+    # Monitoring
+    sentry_dsn: str = Field(default="", env="SENTRY_DSN")
+    environment: str = Field(default="production", env="ENVIRONMENT")
+    
     # Database
     database_url: str = Field(
         default="sqlite:///data/financerag.db",
