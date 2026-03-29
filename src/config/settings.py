@@ -29,6 +29,9 @@ class Settings(BaseSettings):
     api_host: str = Field(default="0.0.0.0", env="API_HOST")
     api_port: int = Field(default=8000, env="API_PORT")
     
+    # Auth
+    api_key: str = Field(default="", env="API_KEY")
+    
     # Database
     database_url: str = Field(
         default="sqlite:///data/financerag.db",

@@ -4,7 +4,7 @@ from typing import List, Optional, Dict, Any
 from pathlib import Path
 import structlog
 
-from fastapi import FastAPI, HTTPException, UploadFile, File, Query
+from fastapi import FastAPI, HTTPException, UploadFile, File, Query, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
@@ -13,6 +13,7 @@ from src.tools.document_processor import DocumentProcessor
 from src.tools.vector_store import get_vector_store_manager
 from src.tools.rag_chain import get_rag_chain
 from src.database import init_db, log_query, log_document
+from src.auth import verify_api_key
 
 logger = structlog.get_logger()
 
@@ -143,7 +144,7 @@ async def health_check():
         )
 
 
-@app.post("/query", response_model=QueryResponse)
+@app.post("/query", response_model=QueryResponse, dependencies=[Depends(verify_api_key)])
 async def query_documents(request: QueryRequest):
     """
     Query the RAG system with a question.
@@ -183,7 +184,7 @@ async def query_documents(request: QueryRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@app.post("/chat", response_model=QueryResponse)
+@app.post("/chat", response_model=QueryResponse, dependencies=[Depends(verify_api_key)])
 async def chat_with_history(request: ChatRequest):
     """
     Chat with conversation history for context-aware responses.
@@ -206,7 +207,7 @@ async def chat_with_history(request: ChatRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@app.post("/ingest", response_model=IngestResponse)
+@app.post("/ingest", response_model=IngestResponse, dependencies=[Depends(verify_api_key)])
 async def ingest_documents(request: IngestRequest):
     """
     Ingest documents from a file or directory path.
@@ -247,7 +248,7 @@ async def ingest_documents(request: IngestRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@app.post("/ingest/upload", response_model=IngestResponse)
+@app.post("/ingest/upload", response_model=IngestResponse, dependencies=[Depends(verify_api_key)])
 async def upload_and_ingest(file: UploadFile = File(...)):
     """
     Upload and ingest a single document file.
@@ -292,7 +293,7 @@ async def get_stats():
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@app.delete("/collection")
+@app.delete("/collection", dependencies=[Depends(verify_api_key)])
 async def clear_collection():
     """Clear all documents from the collection."""
     try:

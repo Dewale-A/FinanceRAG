@@ -12,6 +12,7 @@ services:
       - EMBEDDING_MODEL=${EMBEDDING_MODEL:-text-embedding-ada-002}
       - CHROMA_PERSIST_DIR=/app/data/chroma
       - DATABASE_URL=${DATABASE_URL:-sqlite:///data/financerag.db}
+      - API_KEY=${API_KEY:-}
     volumes:
       - ./data:/app/data
       - ./sample_docs:/app/sample_docs:ro
