@@ -3,7 +3,8 @@
 import { useState, useRef, useEffect } from "react";
 import { Send, FileText, Upload, BarChart3, Clock, Shield, Loader2 } from "lucide-react";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://35.171.2.221";
+// Use local proxy to avoid mixed content (HTTPS frontend -> HTTP backend)
+const PROXY_URL = "/api/proxy";
 
 interface Source {
   filename: string;
@@ -52,7 +53,7 @@ export default function Home() {
 
   const fetchStats = async () => {
     try {
-      const res = await fetch(`${API_URL}/stats`);
+      const res = await fetch(`${PROXY_URL}?endpoint=/stats`);
       if (res.ok) {
         const data = await res.json();
         setStats(data);
@@ -78,13 +79,12 @@ export default function Home() {
     const startTime = Date.now();
 
     try {
-      const res = await fetch(`${API_URL}/query`, {
+      const res = await fetch(PROXY_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "X-API-Key": apiKey,
         },
-        body: JSON.stringify({ question: input, k: 5 }),
+        body: JSON.stringify({ endpoint: "/query", apiKey, question: input, k: 5 }),
       });
 
       if (res.status === 403) {
@@ -134,7 +134,7 @@ export default function Home() {
     formData.append("file", file);
 
     try {
-      const res = await fetch(`${API_URL}/ingest/upload`, {
+      const res = await fetch("/api/upload", {
         method: "POST",
         headers: { "X-API-Key": apiKey },
         body: formData,
