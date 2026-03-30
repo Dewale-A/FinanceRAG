@@ -323,6 +323,59 @@ async def clear_collection():
         raise HTTPException(status_code=500, detail=str(e))
 
 
+@app.get("/analytics")
+async def get_analytics():
+    """Get query analytics from PostgreSQL."""
+    try:
+        from src.database import get_session_factory, QueryLog
+        from sqlalchemy import func, desc
+        SessionLocal = get_session_factory()
+        db = SessionLocal()
+
+        total_queries = db.query(func.count(QueryLog.id)).scalar() or 0
+        avg_response_time = db.query(func.avg(QueryLog.response_time_ms)).scalar() or 0
+        avg_docs_retrieved = db.query(func.avg(QueryLog.documents_retrieved)).scalar() or 0
+
+        recent_queries = db.query(
+            QueryLog.id,
+            QueryLog.question,
+            QueryLog.model,
+            QueryLog.documents_retrieved,
+            QueryLog.response_time_ms,
+            QueryLog.timestamp
+        ).order_by(desc(QueryLog.timestamp)).limit(20).all()
+
+        recent = [
+            {
+                "id": q.id,
+                "question": q.question,
+                "model": q.model,
+                "documents_retrieved": q.documents_retrieved,
+                "response_time_ms": round(q.response_time_ms, 1) if q.response_time_ms else None,
+                "timestamp": q.timestamp.isoformat() if q.timestamp else None,
+            }
+            for q in recent_queries
+        ]
+
+        db.close()
+
+        return {
+            "total_queries": total_queries,
+            "avg_response_time_ms": round(avg_response_time, 1) if avg_response_time else 0,
+            "avg_docs_retrieved": round(avg_docs_retrieved, 1) if avg_docs_retrieved else 0,
+            "recent_queries": recent,
+        }
+    except Exception as e:
+        logger.error("analytics_error", error=str(e))
+        return {
+            "total_queries": 0,
+            "avg_response_time_ms": 0,
+            "avg_docs_retrieved": 0,
+            "recent_queries": [],
+            "error": str(e),
+        }
+
+
 @app.get("/test-sentry")
 async def test_sentry():
     """Trigger a test error for Sentry. Remove after verifying."""

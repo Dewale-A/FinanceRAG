@@ -47,7 +47,8 @@ export default function Home() {
   const [apiKey, setApiKey] = useState("");
   const [showKeyInput, setShowKeyInput] = useState(true);
   const [stats, setStats] = useState<Stats | null>(null);
-  const [activeTab, setActiveTab] = useState<"chat" | "upload">("chat");
+  const [activeTab, setActiveTab] = useState<"chat" | "upload" | "analytics">("chat");
+  const [analytics, setAnalytics] = useState<any>(null);
   const [uploadStatus, setUploadStatus] = useState("");
   const [selectedSource, setSelectedSource] = useState<Source | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -75,6 +76,18 @@ export default function Home() {
       }
     } catch (e) {
       console.error("Failed to fetch stats:", e);
+    }
+  };
+
+  const fetchAnalytics = async () => {
+    try {
+      const res = await fetch(`${PROXY_URL}?endpoint=/analytics`);
+      if (res.ok) {
+        const data = await res.json();
+        setAnalytics(data);
+      }
+    } catch (e) {
+      console.error("Failed to fetch analytics:", e);
     }
   };
 
@@ -232,6 +245,16 @@ export default function Home() {
                 >
                   Upload
                 </button>
+                <button
+                  onClick={() => { setActiveTab("analytics"); fetchAnalytics(); }}
+                  className={`px-4 py-1.5 rounded-md text-xs font-medium transition-all ${
+                    activeTab === "analytics"
+                      ? "bg-teal-500/20 text-teal-400 shadow-sm"
+                      : "text-slate-400 hover:text-slate-200"
+                  }`}
+                >
+                  Analytics
+                </button>
               </nav>
 
               {stats && (
@@ -342,7 +365,7 @@ export default function Home() {
 
       {/* Main Content */}
       <main className="flex-1 max-w-4xl mx-auto w-full px-4 sm:px-6 py-6">
-        {activeTab === "chat" ? (
+        {activeTab === "chat" && (
           <div className="flex flex-col h-[calc(100vh-180px)]">
             {/* Messages */}
             <div className="flex-1 overflow-y-auto pb-4">
@@ -501,7 +524,8 @@ export default function Home() {
               </div>
             </div>
           </div>
-        ) : (
+        )}
+        {activeTab === "upload" && (
           /* Upload Tab */
           <div className="max-w-2xl mx-auto py-10">
             <div className="flex items-center gap-3 mb-6">
@@ -564,6 +588,111 @@ export default function Home() {
                     </p>
                   </div>
                 </div>
+              </div>
+            )}
+          </div>
+        )}
+        {activeTab === "analytics" && (
+          /* Analytics Tab */
+          <div className="max-w-3xl mx-auto py-10">
+            <div className="flex items-center gap-3 mb-8">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center">
+                <BarChart3 className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h2 className="text-xl font-bold text-gray-900">Analytics</h2>
+                <p className="text-xs text-gray-500">
+                  Query performance and usage insights
+                </p>
+              </div>
+            </div>
+
+            {analytics ? (
+              <>
+                {/* Stats Cards */}
+                <div className="grid grid-cols-3 gap-4 mb-8">
+                  <div className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm text-center">
+                    <p className="text-3xl font-bold text-[#0f172a]">
+                      {analytics.total_queries}
+                    </p>
+                    <p className="text-xs text-gray-500 mt-1 font-medium">
+                      Total Queries
+                    </p>
+                  </div>
+                  <div className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm text-center">
+                    <p className="text-3xl font-bold text-[#0f172a]">
+                      {(analytics.avg_response_time_ms / 1000).toFixed(1)}s
+                    </p>
+                    <p className="text-xs text-gray-500 mt-1 font-medium">
+                      Avg Response Time
+                    </p>
+                  </div>
+                  <div className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm text-center">
+                    <p className="text-3xl font-bold text-[#0f172a]">
+                      {analytics.avg_docs_retrieved}
+                    </p>
+                    <p className="text-xs text-gray-500 mt-1 font-medium">
+                      Avg Sources Retrieved
+                    </p>
+                  </div>
+                </div>
+
+                {/* Recent Queries Table */}
+                <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
+                  <div className="px-6 py-4 border-b border-gray-100">
+                    <h3 className="text-sm font-semibold text-gray-700">
+                      Recent Queries
+                    </h3>
+                  </div>
+                  <div className="divide-y divide-gray-100">
+                    {analytics.recent_queries.length > 0 ? (
+                      analytics.recent_queries.map((q: any) => (
+                        <div
+                          key={q.id}
+                          className="px-6 py-4 hover:bg-gray-50/50 transition"
+                        >
+                          <p className="text-sm text-gray-800 font-medium mb-1.5">
+                            {q.question}
+                          </p>
+                          <div className="flex items-center gap-3 text-[11px] text-gray-400">
+                            <span className="flex items-center gap-1">
+                              <Clock className="w-3 h-3" />
+                              {q.response_time_ms
+                                ? `${(q.response_time_ms / 1000).toFixed(1)}s`
+                                : "N/A"}
+                            </span>
+                            <span className="w-1 h-1 rounded-full bg-gray-300" />
+                            <span>{q.documents_retrieved} sources</span>
+                            <span className="w-1 h-1 rounded-full bg-gray-300" />
+                            <span>{q.model}</span>
+                            <span className="w-1 h-1 rounded-full bg-gray-300" />
+                            <span>
+                              {q.timestamp
+                                ? new Date(q.timestamp).toLocaleDateString(
+                                    "en-US",
+                                    {
+                                      month: "short",
+                                      day: "numeric",
+                                      hour: "2-digit",
+                                      minute: "2-digit",
+                                    }
+                                  )
+                                : ""}
+                            </span>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="px-6 py-12 text-center text-sm text-gray-400">
+                        No queries logged yet. Ask a question to get started.
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </>
+            ) : (
+              <div className="text-center py-20 text-sm text-gray-400">
+                Loading analytics...
               </div>
             )}
           </div>
