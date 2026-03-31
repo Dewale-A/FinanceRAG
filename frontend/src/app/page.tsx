@@ -419,9 +419,13 @@ export default function Home() {
                             : "bg-white border border-gray-200/80 rounded-2xl rounded-bl-sm px-5 py-4 shadow-sm"
                         }`}
                       >
-                        <div className="text-sm leading-relaxed prose prose-sm max-w-none prose-headings:text-base prose-headings:font-semibold prose-headings:mt-3 prose-headings:mb-1 prose-p:my-1 prose-li:my-0.5 prose-strong:text-gray-900">
-                          <ReactMarkdown>{msg.content}</ReactMarkdown>
-                        </div>
+                        {msg.role === "assistant" ? (
+                          <div className="text-sm leading-relaxed prose prose-sm max-w-none prose-headings:text-base prose-headings:font-semibold prose-headings:mt-3 prose-headings:mb-1 prose-p:my-1 prose-li:my-0.5 prose-strong:text-gray-900">
+                            <ReactMarkdown>{msg.content}</ReactMarkdown>
+                          </div>
+                        ) : (
+                          <p className="text-sm leading-relaxed whitespace-pre-wrap text-white">{msg.content}</p>
+                        )}
 
                         {/* Sources */}
                         {msg.sources && msg.sources.length > 0 && (
